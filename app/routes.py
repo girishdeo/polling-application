@@ -34,3 +34,14 @@ def vote(poll_id):
 def delete_poll(poll_id):
     Poll.delete(poll_id)
     return redirect(url_for('index'))
+
+@app.route('/edit_poll/<poll_id>', methods=['GET', 'POST'])
+def edit_poll(poll_id):
+    if request.method == 'POST':
+        question = request.form['question']
+        options = request.form.getlist('options')
+        Poll.update(poll_id, question, options)
+        return redirect(url_for('poll', poll_id=poll_id))
+    else:
+        poll = Poll.get(poll_id)
+        return render_template('edit_poll.html', poll=poll)

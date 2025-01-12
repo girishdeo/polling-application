@@ -37,3 +37,13 @@ class Poll:
     def delete(poll_id):
         redis.delete(f'poll:{poll_id}')
         redis.hdel('polls', poll_id)
+
+    @staticmethod
+    def update(poll_id, question, options):
+        poll_data = {
+            'question': question,
+            'options': options,
+            'votes': [0] * len(options)
+        }
+        redis.hmset(f'poll:{poll_id}', poll_data)
+        redis.hset('polls', poll_id, question)
