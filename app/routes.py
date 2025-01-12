@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from app import app, redis
+from app.models import Poll
 
 @app.route('/')
 def index():
@@ -28,3 +29,19 @@ def vote(poll_id):
     votes[option_index] += 1
     redis.hset(f'poll:{poll_id}', 'votes', votes)
     return redirect(url_for('poll', poll_id=poll_id))
+
+@app.route('/delete_poll/<poll_id>', methods=['POST'])
+def delete_poll(poll_id):
+    Poll.delete(poll_id)
+    return redirect(url_for('index'))
+
+@app.route('/edit_poll/<poll_id>', methods=['GET', 'POST'])
+def edit_poll(poll_id):
+    if request.method == 'POST':
+        question = request.form['question']
+        options = request.form.getlist('options')
+        Poll.update(poll_id, question, options)
+        return redirect(url_for('poll', poll_id=poll_id))
+    else:
+        poll = Poll.get(poll_id)
+        return render_template('edit_poll.html', poll=poll)
