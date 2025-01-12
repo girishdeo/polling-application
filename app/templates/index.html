@@ -16,7 +16,12 @@
     <h2>Polls</h2>
     <ul>
         {% for poll_id, question in polls.items() %}
-            <li><a href="{{ url_for('poll', poll_id=poll_id) }}">{{ question }}</a></li>
+            <li>
+                <a href="{{ url_for('poll', poll_id=poll_id) }}">{{ question }}</a>
+                <form action="{{ url_for('delete_poll', poll_id=poll_id) }}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
 </body>

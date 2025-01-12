@@ -32,3 +32,8 @@ class Poll:
     def all():
         polls = redis.hgetall('polls')
         return polls
+
+    @staticmethod
+    def delete(poll_id):
+        redis.delete(f'poll:{poll_id}')
+        redis.hdel('polls', poll_id)
