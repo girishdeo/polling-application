@@ -8,8 +8,9 @@
     <h1>Polling App</h1>
     <form action="{{ url_for('create_poll') }}" method="post">
         <input type="text" name="question" placeholder="Poll Question" required>
-        <input type="text" name="options" placeholder="Option 1" required>
-        <input type="text" name="options" placeholder="Option 2" required>
+        <input type="text" name="options" placeholder="Red" required>
+        <input type="text" name="options" placeholder="Green" required>
+        <input type="text" name="options" placeholder="Blue" required>
         <button type="submit">Create Poll</button>
     </form>
     <h2>Polls</h2>
