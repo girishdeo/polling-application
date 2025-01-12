@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ poll['question'] }}</title>
+</head>
+<body>
+    <h1>{{ poll['question'] }}</h1>
+    <form action="{{ url_for('vote', poll_id=request.view_args['poll_id']) }}" method="post">
+        {% for option in poll['options'] %}
+            <input type="radio" name="option" value="{{ loop.index0 }}">{{ option }}<br>
+        {% endfor %}
+        <button type="submit">Vote</button>
+    </form>
+    <h2>Results</h2>
+    <ul>
+        {% for option, vote in zip(poll['options'], poll['votes']) %}
+            <li>{{ option }}: {{ vote }} votes</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

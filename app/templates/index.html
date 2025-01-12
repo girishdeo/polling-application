@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polling App</title>
+</head>
+<body>
+    <h1>Polling App</h1>
+    <form action="{{ url_for('create_poll') }}" method="post">
+        <input type="text" name="question" placeholder="Poll Question" required>
+        <input type="text" name="options" placeholder="Option 1" required>
+        <input type="text" name="options" placeholder="Option 2" required>
+        <button type="submit">Create Poll</button>
+    </form>
+    <h2>Polls</h2>
+    <ul>
+        {% for poll_id, question in polls.items() %}
+            <li><a href="{{ url_for('poll', poll_id=poll_id) }}">{{ question }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
